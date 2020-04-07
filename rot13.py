@@ -7,49 +7,39 @@ Only letters from the latin/english alphabet should be shifted, like in the orig
 
 """
 
+import string
+
+def encoded_char(step,char, string):
+    for i in range(len(string)):
+        if string[i] == char:
+            char_num = i
+            counter = 0
+            new_char_num = i
+            while counter != step:
+                if new_char_num < (len(string) - 1):
+                    new_char_num += 1
+                else:
+                    new_char_num = 0
+                counter += 1
+    new_char = string[new_char_num]
+
+    return new_char
+
 def rot13(message):
-    lower_letters = 'abcdefghijklmnopqrstuvwxyz'
-    capital_letters = lower_letters.upper()
-    numbers = '0123456789'
-    symbols = "!@#$%^&*()[]{}'/.><?,'=-+"
     new_message = ''
     letter_number = 0
-    for char in message:
-        if char in lower_letters:
-            for i in range(len(lower_letters)):
-                if lower_letters[i] == char:
-                    letter_number = i
-                    counter = 0
-                    new_letter_num = i
-                    while counter != 13:
-                        if new_letter_num < 25:
-                            new_letter_num += 1
-                        else:
-                            new_letter_num = 0
-                        counter += 1
-                    new_message += lower_letters[new_letter_num]
-        elif char == ' ':
+    for letter in message:
+        if letter in string.ascii_lowercase:
+            new_message += encoded_char(13, letter, string.ascii_lowercase)
+        elif letter == ' ':
             new_message += ' '
-        elif char in numbers:
-            new_message += char
-        elif char in symbols:
-            new_message += char
+        elif letter in string.digits:
+            new_message += letter
+        elif letter in string.punctuation:
+            new_message += letter
         else:
-            for i in range(len(capital_letters)):
-                if capital_letters[i] == char:
-                    letter_number = i
-                    counter = 0
-                    new_letter_num = i
-                    while counter != 13:
-                        if new_letter_num < 25:
-                            new_letter_num += 1
-                        else:
-                            new_letter_num = 0
-                        counter += 1
-                    new_message += capital_letters[new_letter_num]
-
+            new_message += encoded_char(13, letter, string.ascii_uppercase)
     return new_message
-
 
 print(rot13('Test 1234 test motherfucker!@>@$?'))
 print(rot13('10+2 equals twelve'))
