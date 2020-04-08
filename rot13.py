@@ -41,5 +41,5 @@ def rot13(message):
             new_message += encoded_char(13, letter, string.ascii_uppercase)
     return new_message
 
-print(rot13('Test 1234 test motherfucker!@>@$?'))
+print(rot13('Test 1234 test person_1!@>@$?'))
 print(rot13('10+2 equals twelve'))
